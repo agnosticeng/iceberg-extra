@@ -1,0 +1,22 @@
+[package]
+name = "icepack"
+version = "0.0.1"
+edition = "2024"
+
+[dependencies]
+url = "2.5"
+thiserror = "2"
+object_store = { version = "0.12", features = ["http", "aws"] }
+async-trait = "0.1"
+serde_json = "1"
+iceberg-rust = { git = "https://github.com/arnaudbriche/iceberg-rust.git", branch = "integration" }
+iceberg-rest-catalog = { git = "https://github.com/arnaudbriche/iceberg-rust.git", branch = "integration" } 
+querystring = "1"
+
+[dev-dependencies]
+iceberg-rust-spec = { git = "https://github.com/arnaudbriche/iceberg-rust.git", branch = "integration" } 
+uuid = "1.19.0"
+anyhow = "1"
+arrow = "57"
+futures = "0.3"
+tokio = { version = "1", features = ["rt-multi-thread", "io-std", "io-util", "fs"] }
