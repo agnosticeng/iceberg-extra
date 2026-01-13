@@ -1,19 +1,27 @@
-extern crate icepack;
+extern crate iceberg_extra;
 
 use anyhow::Result;
 use anyhow::anyhow;
 use arrow::array::record_batch;
 use futures::stream::{self};
-use iceberg_rust::arrow::write::write_parquet_partitioned;
-use iceberg_rust::catalog::Catalog;
-use iceberg_rust::catalog::create::CreateTableBuilder;
-use iceberg_rust::catalog::tabular::Tabular;
-use iceberg_rust::spec::schema::Schema;
-use iceberg_rust::spec::types::{PrimitiveType, StructField, Type};
-use iceberg_rust_spec::identifier::Identifier;
-use iceberg_rust_spec::namespace::Namespace;
-use icepack::iceberg_extra::catalog::FileCatalog;
-use icepack::iceberg_extra::object_store::parse_url_opts;
+use iceberg_rust::{
+    arrow::write::write_parquet_partitioned,
+    catalog::{
+        Catalog,
+        create::CreateTableBuilder,
+        tabular::Tabular
+    },
+    spec::{
+        schema::Schema,
+        types::{PrimitiveType, StructField, Type},
+        identifier::Identifier,
+        namespace::Namespace
+    }
+};
+use iceberg_extra::{
+    catalog::FileCatalog,
+    object_store::parse_url_opts
+};
 use std::sync::Arc;
 use url::Url;
 use uuid::Uuid;
