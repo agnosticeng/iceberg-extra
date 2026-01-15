@@ -1,8 +1,8 @@
 use iceberg_rust::object_store::ObjectStoreBuilder;
 use object_store::{
+    ObjectStoreScheme,
     aws::{AmazonS3Builder, AmazonS3ConfigKey},
     path::Path,
-    ObjectStoreScheme,
 };
 use querystring::querify;
 use std::str::FromStr;

@@ -8,6 +8,8 @@ pub enum Error {
     #[error(transparent)]
     Iceberg(#[from] iceberg_rust::error::Error),
     #[error(transparent)]
+    IcebergSpec(#[from] iceberg_rust::spec::error::Error),
+    #[error(transparent)]
     RestConfigurationbuilder(
         #[from] iceberg_rest_catalog::apis::configuration::ConfigurationBuilderError,
     ),
