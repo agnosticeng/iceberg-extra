@@ -19,15 +19,10 @@ use url::Url;
 pub fn parse_identifier(s: &str) -> Result<Identifier, Error> {
     let parts = s.split(".").map(ToOwned::to_owned).collect::<Vec<String>>();
 
-    eprintln!("{:?}", parts);
-
     match parts.len() {
         0 => Err(iceberg_rust::error::Error::InvalidFormat("identifier".to_owned()).into()),
         1 => Ok(Identifier::new(&Namespace::empty(), &parts[0])),
-        n => {
-            eprintln!("{:?}", &parts[0..n - 1]);
-            Ok(Identifier::new(&parts[0..n - 1], &parts[n - 1]))
-        }
+        n => Ok(Identifier::new(&parts[0..n - 1], &parts[n - 1])),
     }
 }
 
