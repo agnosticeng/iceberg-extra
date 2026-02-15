@@ -104,12 +104,13 @@ where
 
             Ok(Arc::new(RestCatalog::new(
                 m.get("name").map(|x| x.as_str()),
-                b.build().map_err(|e| Error::RestConfigurationbuilder(e))?,
+                b.build().map_err(Error::RestConfigurationbuilder)?,
                 rewriter,
-                os.clone().and_then(|x| Some(x.1)),
+                os.clone().map(|x| x.1),
                 os.is_some(),
             )))
         }
+
         Some(val) => Err(Error::BadPropertyValue("type".to_owned(), val.to_owned())),
         None => Err(Error::MissingProperty("type".to_owned())),
     }

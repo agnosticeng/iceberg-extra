@@ -64,7 +64,7 @@ impl FileCatalog {
         if !identifier.namespace().is_empty() {
             return Err(IcebergError::NotFound(format!(
                 "namespace {}",
-                identifier.namespace().to_string()
+                identifier.namespace()
             )));
         }
 
@@ -185,10 +185,7 @@ impl Catalog for FileCatalog {
 
     async fn list_tabulars(&self, namespace: &Namespace) -> Result<Vec<Identifier>, IcebergError> {
         if !namespace.is_empty() {
-            return Err(IcebergError::NotFound(format!(
-                "namespace {}",
-                namespace.to_string()
-            )));
+            return Err(IcebergError::NotFound(format!("namespace {}", namespace)));
         }
 
         let (object_store, path) = self.get_object_store_and_path()?;
