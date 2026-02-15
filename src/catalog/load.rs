@@ -26,6 +26,16 @@ pub fn parse_identifier(s: &str) -> Result<Identifier, Error> {
     }
 }
 
+pub async fn load_table(catalog: Arc<dyn Catalog>, table: &str) -> Result<Table, Error> {
+    let id = parse_identifier(table)?;
+
+    let Tabular::Table(table) = catalog.clone().load_tabular(&id).await? else {
+        return Err(Error::NotATable(table.to_owned()));
+    };
+
+    Ok(table)
+}
+
 pub async fn load_catalog_and_table<I>(
     props: I,
     table: &str,
