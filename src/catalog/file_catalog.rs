@@ -251,7 +251,11 @@ impl Catalog for FileCatalog {
             ));
         }
 
-        create_table.location = Some(self.base_path.clone() + "/" + identifier.name());
+        create_table.location = Some(format!(
+            "{}/{}",
+            self.base_path.clone().trim_end_matches('/'),
+            identifier.name().trim_start_matches('/')
+        ));
         let (object_store, _) = self.get_object_store_and_path()?;
 
         let metadata: TableMetadata = create_table.try_into()?;
