@@ -1,3 +1,4 @@
+use crate::url::UrlExt;
 use async_trait::async_trait;
 use core::str;
 use iceberg_rust::{
@@ -24,6 +25,7 @@ use iceberg_rust::{
 };
 use object_store::{ObjectStore, PutOptions, UpdateVersion};
 use std::{collections::HashMap, sync::Arc};
+use url::Url;
 
 const VERSION_HINT_FILE_NAME: &str = "version-hint.text";
 const METADATA_FILE_EXTENSION: &str = ".metadata.json";
@@ -316,6 +318,9 @@ impl Catalog for FileCatalog {
         };
 
         let mut metadata = table.metadata().clone();
+        let mut location_url = Url::parse(&metadata.location)?;
+        location_url.cleanup_empty_path_segments();
+        metadata.location = location_url.to_string();
 
         if !check_table_requirements(&commit.requirements, &metadata) {
             return Err(IcebergError::InvalidFormat(
