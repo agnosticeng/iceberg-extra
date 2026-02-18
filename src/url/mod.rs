@@ -16,3 +16,9 @@ impl UrlExt for Url {
         self.set_path(&clean_path);
     }
 }
+
+pub fn cleanup_url_empty_path_segments(s: &str) -> Result<String, url::ParseError> {
+    let mut u = Url::parse(s)?;
+    u.cleanup_empty_path_segments();
+    Ok(u.to_string())
+}
